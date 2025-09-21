@@ -17,9 +17,9 @@ namespace Pong
 
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-            ball = new Ball(0, 0, 10);
-            player1 = new Player(-300, 0, 90, 20, 5);
-            player2 = new Player(300, 0, 90, 20, 5);
+            player1 = new Player(-300, 0, 90, 20, 8);
+            player2 = new Player(300, 0, 90, 20, 8);
+            ball = new Ball(0, 0, 10, Width, Height, player1, player2);
 
             KeyDown += Game_KeyDown;
             KeyUp += Game_KeyUp;
@@ -29,21 +29,24 @@ namespace Pong
         {
             switch (e.Key)
             {
-                case Key.Up: player1.Direction = 1; break;
-                case Key.Down: player1.Direction = -1; break;
+                case Key.W: player1.Direction = 1; break;
+                case Key.S: player1.Direction = -1; break;
+                case Key.Up: player2.Direction = 1; break;
+                case Key.Down: player2.Direction = -1; break;
             }
         }
 
         private void Game_KeyUp(object sender, KeyboardKeyEventArgs e)
-        {
+        {    
             switch (e.Key)
             {
-                case Key.Up:
-                case Key.Down:
-                    player1.Direction = 0;
-                    break;
+                case Key.W: player1.Direction = 0; break;
+                case Key.S: player1.Direction = 0; break;
+                case Key.Up: player2.Direction = 0; break;
+                case Key.Down: player2.Direction = 0; break;
             }
         }
+        
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {

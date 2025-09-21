@@ -10,6 +10,11 @@ namespace Pong
         private int width;
         private int speed;
 
+        public int X { get { return x; } }
+        public int Y { get { return y; } }
+        public int Width { get { return width; } }
+        public int Height { get { return height; } }
+
         public int Direction { get; set; }
 
         public Player(int x, int y, int height, int width, int speed)
