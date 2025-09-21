@@ -11,6 +11,9 @@ namespace Pong
         private Player player1;
         private Player player2;
 
+        public static int player1Score = 0;
+        public static int player2Score = 0;
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -72,6 +75,14 @@ namespace Pong
             player2.Render();
 
             SwapBuffers();
+        }
+
+        public static void AddScore(int player)
+        {
+            if (player == 1)
+                player1Score++;
+            else if (player == 2)
+                player2Score++;
         }
     }
 }

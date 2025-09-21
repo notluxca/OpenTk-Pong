@@ -33,12 +33,16 @@ namespace Pong
             // right border
             if (x + size / 2 >= windowsWidth / 2 )
             {
-                InvertDirection();
+                x = 0;
+                y = 0;
+                Game.AddScore(1);
             }
             // left border
             else if (x - size / 2 <= -windowsWidth / 2)
             {
-                InvertDirection();
+                x = 0;
+                y = 0;
+                Game.AddScore(0);
             }
 
             if(IsCollidingWithPlayer(player1) || IsCollidingWithPlayer(player2))
@@ -47,8 +51,6 @@ namespace Pong
             }
 
             x += current_direction * ballSpeed;
-
-            Console.WriteLine(player1.Y);
         }
 
         private bool IsCollidingWithPlayer(Player player)
@@ -64,6 +66,13 @@ namespace Pong
         private void InvertDirection()
         {
             current_direction *= -1;
+        }
+
+        private void ResetBall()
+        {
+            x = 0;
+            y = 0;
+            
         }
 
     }
