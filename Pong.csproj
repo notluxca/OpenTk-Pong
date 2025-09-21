@@ -36,6 +36,9 @@
     <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
     </Reference>
+    <Reference Include="QuickFont, Version=3.0.2.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\QuickFont.3.0.2.1\lib\net40\QuickFont.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -47,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Canva\Text\ScoreText.cs" />
+    <Compile Include="Canva\Text\TextRenderer.cs" />
     <Compile Include="Entities\Ball.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Game.cs" />
@@ -56,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Assets\Fonts\PixelFont.ttf" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -1,8 +1,11 @@
-﻿using System;
-using OpenTK;
+﻿using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-
+using Pong.Canva.Text;
+using QuickFont;
+using System;
+using System.Drawing;
 namespace Pong
 {
     internal class Game : GameWindow
@@ -13,21 +16,24 @@ namespace Pong
 
         public static int player1Score = 0;
         public static int player2Score = 0;
+        private TextRenderer textRenderer;
+        
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            Width = 800;
 
-            player1 = new Player(-300, 0, 90, 20, 8, Height);
-            player2 = new Player(300, 0, 90, 20, 8, Height);
+            player1 = new Player(-380, 0, 90, 20, 8, Height);
+            player2 = new Player(380, 0, 90, 20, 8, Height);
             ball = new Ball(0, 0, 10, Width, Height, player1, player2);
+            textRenderer = new TextRenderer("C:\\Users\\Notluxca\\source\\repos\\Pong\\Assets\\Fonts\\PixelFont.ttf", 32);
+            textRenderer.Dispose();
 
             KeyDown += Game_KeyDown;
             KeyUp += Game_KeyUp;
 
-            Width = 1000;
         }
 
         private void Game_KeyDown(object sender, KeyboardKeyEventArgs e)
@@ -60,6 +66,7 @@ namespace Pong
             ball.Update(e.Time);
             player1.Update();
             player2.Update();
+            
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -72,6 +79,7 @@ namespace Pong
 
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
+            // textRenderer.UpdateText($"{player1Score} - {player2Score}");
             ball.Render();
             player1.Render();
             player2.Render();
@@ -87,7 +95,7 @@ namespace Pong
                 player2Score++;
 
             Console.Clear();
-            Console.WriteLine($"Score: Player 1 - {player1Score}, Player 2 - {player2Score}");            
+            // Console.WriteLine($"Score: Player 1 - {player1Score}, Player 2 - {player2Score}");            
         }
     }
 }

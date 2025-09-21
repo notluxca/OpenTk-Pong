@@ -13,5 +13,10 @@ namespace Pong
             GL.Vertex2(x - width / 2, y + height / 2);
             GL.End();
         }
+
+        public static void DrawText(float x, float y, string text) //todo implement text rendering
+        {
+        }
+
     }
 }
