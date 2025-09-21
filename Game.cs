@@ -55,7 +55,7 @@ namespace Pong
         {
             base.OnUpdateFrame(e);
 
-            ball.Update();
+            ball.Update(e.Time);
             player1.Update();
             player2.Update();
         }
@@ -83,6 +83,9 @@ namespace Pong
                 player1Score++;
             else if (player == 2)
                 player2Score++;
+
+            Console.Clear();
+            Console.WriteLine($"Score: Player 1 - {player1Score}, Player 2 - {player2Score}");            
         }
     }
 }

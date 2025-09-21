@@ -11,11 +11,17 @@ namespace Pong
 
         private int ballSpeed = 5;
         private int current_direction = 1;
+        private int current_Ydirection = 1;
 
         private int windowsWidth;
         private int windowsHeight;
         private Player player1;
         private Player player2;
+        private Random random = new Random();
+
+        // timer
+        private bool isPaused = false;
+        private double timer = 0;
 
         public Ball(int x, int y, int size, int windowsWidth, int windowsHeight, Player player1, Player player2 )
         {
@@ -28,31 +34,28 @@ namespace Pong
             this.player2 = player2;
         }
 
-        public void Update()
+        public void Update(double deltaTime)
         {
-            // right border
-            if (x + size / 2 >= windowsWidth / 2 )
+            // Timer 
+            if (isPaused)
             {
-                x = 0;
-                y = 0;
-                Game.AddScore(1);
-            }
-            // left border
-            else if (x - size / 2 <= -windowsWidth / 2)
-            {
-                x = 0;
-                y = 0;
-                Game.AddScore(0);
+                timer -= deltaTime;
+                if (timer <= 0)
+                {
+                    isPaused = false;
+                }
+                return; // skip movement during pause
             }
 
-            if(IsCollidingWithPlayer(player1) || IsCollidingWithPlayer(player2))
-            {
-                InvertDirection();
-            }
-
-            x += current_direction * ballSpeed;
+            CheckAndProcessMapCollisions();
+            CheckAndProcessPlayerCollisions();
+            Move();
         }
 
+        private void Move() {
+            x += current_direction * ballSpeed;
+            y += current_Ydirection * ballSpeed;
+        }
         private bool IsCollidingWithPlayer(Player player)
         {
             return (x - size / 2 <= player.X + player.Width / 2 && x + size / 2 >= player.X - player.Width / 2) &&
@@ -62,17 +65,53 @@ namespace Pong
         {
             Renderer.DrawRectangle(x, y, size, size);
         }
-
         private void InvertDirection()
         {
             current_direction *= -1;
         }
-
+        private void CheckAndProcessPlayerCollisions()
+        {
+            if (IsCollidingWithPlayer(player1) || IsCollidingWithPlayer(player2))
+            {
+                InvertDirection();
+            }
+        }
+        private void CheckAndProcessMapCollisions()
+        {
+            // -- Walls
+            // right border
+            if (x + size / 2 >= windowsWidth / 2)
+            {
+                ResetBall();
+                Game.AddScore(1);
+            }
+            // left border
+            else if (x - size / 2 <= -windowsWidth / 2)
+            {
+                ResetBall();
+                Game.AddScore(2);
+            }
+            // -- Top and Bottom borders
+            // top border
+            if (y + size / 2 >= windowsHeight / 2)
+            {
+                current_Ydirection *= -1;
+            } // bottom border
+            else if (y - size / 2 <= -windowsHeight / 2)
+            {
+                current_Ydirection *= -1;
+            }
+        }
         private void ResetBall()
         {
             x = 0;
             y = 0;
-            
+            current_direction = random.Next(0, 2) == 0 ? -1 : 1;
+            current_Ydirection = random.Next(0, 2) == 0 ? -1 : 1;
+
+            // pause for 2 seconds
+            isPaused = true;
+            timer = 2.0;
         }
 
     }
