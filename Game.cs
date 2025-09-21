@@ -20,12 +20,14 @@ namespace Pong
 
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-            player1 = new Player(-300, 0, 90, 20, 8);
-            player2 = new Player(300, 0, 90, 20, 8);
+            player1 = new Player(-300, 0, 90, 20, 8, Height);
+            player2 = new Player(300, 0, 90, 20, 8, Height);
             ball = new Ball(0, 0, 10, Width, Height, player1, player2);
 
             KeyDown += Game_KeyDown;
             KeyUp += Game_KeyUp;
+
+            Width = 1000;
         }
 
         private void Game_KeyDown(object sender, KeyboardKeyEventArgs e)
